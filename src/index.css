@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  /* 브랜드 색상 */
+  --color-yellow: #F7D346;
+  --color-gray: #767676;
+  
+  /* 배경 및 텍스트 */
+  --color-white: #FFFFFF;
+  --color-darkgray: #3B3C3F;
+  --color-background: #F8F9FA;
+
+  /* 공통 둥글기 */
+  --radius-button: 12px;
+  --radius-card: 16px;
+
+  /* 공통 그림자 */
+  --shadow-card: 0px 4px #000000 0.1;
+
+
+  /* Header: 18px / 140% / Bold */
+  --text-header: 18px;
+  --text-header--line-height: 140%;
+  --text-header--font-weight: 700;
+
+  /* Title: 16px / 140% / SemiBold */
+  --text-title: 16px;
+  --text-title--line-height: 140%;
+  --text-title--font-weight: 600;
+
+  /* Body 1: 14px / 140% / Medium */
+  --text-body-1: 14px;
+  --text-body-1--line-height: 140%;
+  --text-body-1--font-weight: 500;
+
+  /* Body 2: 14px / 140% / Regular */
+  --text-body-2: 14px;
+  --text-body-2--line-height: 140%;
+  --text-body-2--font-weight: 400;
+
+  /* Caption 2: 12px / 140% / Medium */
+  --text-caption-2: 12px;
+  --text-caption-2--line-height: 140%;
+  --text-caption-2--font-weight: 500;
+
+  /* Caption 1: 12px / 140% / Regular */
+  --text-caption-1: 12px;
+  --text-caption-1--line-height: 140%;
+  --text-caption-1--font-weight: 400;
+}
+
+/* 전체 페이지 기본 설정 */
+
+@layer base {
+  html {
+    font-family: Pretendard;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+/* 모바일 앱 영역 */
+#root {
+  width: 100%;
+  max-width: 375px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--color-background);
+}
