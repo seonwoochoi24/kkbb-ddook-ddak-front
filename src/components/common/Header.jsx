@@ -1,12 +1,12 @@
 // src/components/common/Header.jsx
-import star from "../../assets/icons/star.svg";
-import arrow from "../../assets/icons/arrow.svg";
-import hamburger from "../../assets/icons/hamburger.svg";
+import star from "../../assets/logo/star.svg";
+import { Icon } from "@iconify/react";
+
 function Header() {
   return (
     <header className="sticky top-0 z-10 flex justify-between h-14 items-center bg-white px-5">
        <button className="mr-2">
-        <img src={arrow} alt="Arrow" />
+        <Icon icon="heroicons:arrow-left-16-solid" className="h-6 w-6" />
       </button>
       <div className="flex items-start">
         <h1 className="text-header text-darkgray">
@@ -14,8 +14,8 @@ function Header() {
         </h1>
         <img src={star} alt="Star" className="ml-2" />
       </div>
-      <button className="mr-2">
-        <img src={hamburger} alt="Hamburger" />
+     <button className="mr-2">
+        <Icon icon="ci:hamburger-md" className="h-6 w-6" />
       </button>
     </header>
   );
