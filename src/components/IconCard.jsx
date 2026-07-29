@@ -1,45 +1,72 @@
 import drive from "../assets/icons/drive.svg";
 import idcard from "../assets/icons/idcard.svg";
 
-const CARD_CONFIG = {
-  1: {
-    class: "실속형",
-    title: "기본 의료비 위주",
-    price: "약 3,500원",
-  },
-  2: {
-    class: "고급형(추천)",
-    title: "기본 의료비 위주",
-    price: "약 3,500원",
-  },
+const ID_CARD_CONFIG = {
   3: {
-    class: "",
     title: "운전면허증",
-    price: "",
     icon: drive,
   },
   4: {
-    class: "",
     title: "주민등록증",
-    price: "",
     icon: idcard,
   },
 };
 
-function IconCard({ type = "1", selected = false, onClick }) {
-  const config = CARD_CONFIG[type];
-  const cardClass = selected ? "bg-yellow" : "bg-background";
+function IconCard({
+  type = "1",
+  planName,
+  coverages = [],
+  finalPrice,
+  selected = false,
+  onClick,
+}) {
+  const isInsuranceCard = type === "1" || type === "2";
+  const idCardConfig = ID_CARD_CONFIG[type];
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`w-[126px] flex flex-col items-center justify-between rounded-button ${cardClass} px-4 py-5 transition-colors cursor-pointer`}
+      className={`flex w-[126px] cursor-pointer flex-col items-center justify-between rounded-button px-4 py-5 transition-colors ${
+        selected ? "bg-yellow" : "bg-background"
+      }`}
     >
-      {config.icon ? <img src={config.icon} alt="" className="mb-2 h-8 w-8" /> : null}
-      <span className="text-caption-2 text-gray">{config.class}</span>
-      <h2 className="text-body-1 text-darkgray">{config.title}</h2>
-      <span className="text-caption-2 text-darkgray">{config.price}</span>
+      {isInsuranceCard ? (
+        <>
+          <span className="text-caption-2 text-gray">
+            {planName}
+          </span>
+
+          <div className="my-2 flex flex-col gap-1">
+            {coverages.map((coverage) => (
+              <span
+                key={coverage}
+                className="break-keep text-center text-caption-2 text-darkgray"
+              >
+                {coverage}
+              </span>
+            ))}
+          </div>
+
+          <span className="text-body-1 text-darkgray">
+            약 {finalPrice?.toLocaleString("ko-KR")}원
+          </span>
+        </>
+      ) : (
+        <>
+          {idCardConfig?.icon && (
+            <img
+              src={idCardConfig.icon}
+              alt=""
+              className="mb-2 h-8 w-8"
+            />
+          )}
+
+          <h2 className="text-body-1 text-darkgray">
+            {idCardConfig?.title}
+          </h2>
+        </>
+      )}
     </button>
   );
 }
