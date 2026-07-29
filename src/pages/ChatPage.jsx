@@ -14,7 +14,7 @@ import ReceiveInfo from "../components/widgets/ReceiveInfo.jsx";
 import Exchange from "../components/widgets/Exchange.jsx";
 import Plan from "../components/widgets/Plan.jsx";
 
-function MainPage() {
+function ChatPage() {
   return (
     <main className="min-h-dvh pb-[100px] flex flex-col gap-3">
       <Exchange />
@@ -37,4 +37,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default ChatPage;
