@@ -12,12 +12,35 @@ function Chat({ type = "chat" }) {
       ? "필요한 상황을 자유롭게 말해주세요."
       : "나 지갑을 잃어벼렸는데 어떡하지?";
 
-  const handleButtonClick = () => {
-    if (hasMessage) {
-      console.log("전송할 메시지:", message);
+  const API_URL = import.meta.env.VITE_CHAT_API_URL ?? "";
 
-      // 전송 후 입력창 비우기
-      setMessage("");
+  const handleButtonClick = async () => {
+    if (hasMessage) {
+      if (!API_URL) {
+        console.warn("VITE_CHAT_API_URL is not set in environment variables");
+        setMessage("");
+        return;
+      }
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("응답:", data);
+      } catch (err) {
+        console.error("전송 에러:", err);
+      } finally {
+        setMessage("");
+      }
     } else {
       console.log("음성 입력 시작");
     }
