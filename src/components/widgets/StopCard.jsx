@@ -19,7 +19,6 @@ function StopCard() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setIsEnabled(false);
   };
 
   return (
