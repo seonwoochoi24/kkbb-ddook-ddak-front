@@ -2,7 +2,7 @@
 
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.jsx";
-import MainPage from "./pages/MainPage.jsx";
+import MainPage from "./pages/Mainpage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <MainPage />,
+        element: <Mainpage />,
       },
       {
         path: "*",
