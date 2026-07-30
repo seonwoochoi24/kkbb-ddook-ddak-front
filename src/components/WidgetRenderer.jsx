@@ -32,16 +32,6 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       break;
 
     case "group_account_status":
-      component = <More {...widget} />;
-      break;
-
-    case "expense_report_widget":
-      component = <CardFreezeAll {...widget} />;
-      break;
-
-    case "group_card_safety_widget":
-      component = <FreezeCard {...widget} />;
-      break;
       return <GroupAccount {...widget} />;
 
     case "expense_report_widget":
@@ -53,11 +43,11 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       break;
 
     case "expense_report_widget":
-      component = <CardFreezeAll {...widget} />;
+      component = <ExpenseReport {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
       break;
 
     case "group_card_safety_widget":
-      component = <FreezeCard {...widget} />;
+      component = <CardSafety {...widget} />;
       break;
 
     case "card_freeze_all":
