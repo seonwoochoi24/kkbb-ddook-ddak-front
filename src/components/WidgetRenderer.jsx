@@ -4,18 +4,14 @@ import Plan from "./travel/Plan.jsx";
 import OverseasQrPaymentWidget from "./travel/OverseasQrPaymentWidget.jsx";
 import TravelInsuranceWidget from "./travel/TravelInsuranceWidget.jsx";
 
+import GroupAccount from "./widgets/GroupAccount.jsx";
+import ExpenseReport from "./widgets/ExpenseReport.jsx";
+import CardSafety from "./widgets/CardSafety.jsx";
+
 import More from "./widgets/More.jsx";
 import CardFreezeAll from "./lost/CardFreezeAll.jsx";
 import FreezeCard from "./lost/FreezeCard.jsx";
 import AtmSmartWithdrawal from "./lost/AtmSmartWithdrawal.jsx";
-import GroupAccount from "./widgets/GroupAccount.jsx";
-import ExpenseReport from "./widgets/ExpenseReport.jsx";
-import CardSafety from "./widgets/CardSafety.jsx";
-import StopCard from "./widgets/StopCard.jsx";
-import Atm from "./widgets/Atm.jsx";
-import AtmNum from "./widgets/AtmNum.jsx";
-import AtmPlace from "./widgets/AtmPlace.jsx";
-import AtmDes from "./widgets/AtmDes.jsx";
 import Done from "./widgets/Done.jsx";
 import ReceiveInfo from "./widgets/ReceiveInfo.jsx";
 
@@ -50,9 +46,19 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
 
     case "expense_report_widget":
       return <ExpenseReport {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
-
+ 
     case "group_card_safety_widget":
       return <CardSafety {...widget} />;
+      component = <More {...widget} />;
+      break;
+
+    case "expense_report_widget":
+      component = <CardFreezeAll {...widget} />;
+      break;
+
+    case "group_card_safety_widget":
+      component = <FreezeCard {...widget} />;
+      break;
 
     case "card_freeze_all":
       component = <CardFreezeAll {...widget} />;
