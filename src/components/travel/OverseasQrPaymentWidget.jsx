@@ -72,7 +72,7 @@ function OverseasQrPaymentWidget({
           onClick={isConnected ? undefined : toggleSheet}
           disabled={isConnected}
           aria-disabled={isConnected}
-          className={`rounded-button px-4 py-3 w-full text-body-1 font-semibold ${
+          className={`rounded-button px-4 py-4 w-full text-body-1 font-semibold ${
             isConnected ? "bg-yellow text-black cursor-default" : "bg-darkgray text-white"
           }`}
         >

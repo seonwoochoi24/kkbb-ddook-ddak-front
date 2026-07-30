@@ -54,13 +54,13 @@ function Chat({ type = "chat", onWidgetsReceived }) {
 
       console.log("응답:", data);
 
-      // 응답으로 받은 widgets를 MainPage에 전달
-      onWidgetsReceived?.(data.widgets ?? []);
+      // 응답으로 받은 widgets와 greeting을 MainPage에 전달
+      onWidgetsReceived?.(data.widgets ?? [], data.greeting ?? null);
     } catch (error) {
       console.error("전송 에러:", error);
 
       // 에러가 발생하면 기존 위젯을 없애고 싶을 때
-      onWidgetsReceived?.([]);
+      onWidgetsReceived?.([], null);
     } finally {
       setIsLoading(false);
     }

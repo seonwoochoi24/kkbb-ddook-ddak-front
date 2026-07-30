@@ -4,6 +4,10 @@ import Plan from "./travel/Plan.jsx";
 import OverseasQrPaymentWidget from "./travel/OverseasQrPaymentWidget.jsx";
 import TravelInsuranceWidget from "./travel/TravelInsuranceWidget.jsx";
 
+import More from "./widgets/More.jsx";
+import CardFreezeAll from "./lost/CardFreezeAll.jsx";
+import FreezeCard from "./lost/FreezeCard.jsx";
+import AtmSmartWithdrawal from "./lost/AtmSmartWithdrawal.jsx";
 import GroupAccount from "./widgets/GroupAccount.jsx";
 import ExpenseReport from "./widgets/ExpenseReport.jsx";
 import CardSafety from "./widgets/CardSafety.jsx";
@@ -16,17 +20,32 @@ import Done from "./widgets/Done.jsx";
 import ReceiveInfo from "./widgets/ReceiveInfo.jsx";
 
 function WidgetRenderer({ widget, onSheetOpenChanged }) {
+  let component = null;
+
   switch (widget.type) {
     case "travel_card_charge_widget":
-      return <TravelCardChargeWidget {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
+      component = <TravelCardChargeWidget {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
+      break;
 
     case "overseas_qr_payment_widget":
-      return <OverseasQrPaymentWidget {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
+      component = <OverseasQrPaymentWidget {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
+      break;
 
     case "travel_insurance_widget":
-      return <TravelInsuranceWidget {...widget} />;
+      component = <TravelInsuranceWidget {...widget} />;
+      break;
 
     case "group_account_status":
+      component = <More {...widget} />;
+      break;
+
+    case "expense_report_widget":
+      component = <CardFreezeAll {...widget} />;
+      break;
+
+    case "group_card_safety_widget":
+      component = <FreezeCard {...widget} />;
+      break;
       return <GroupAccount {...widget} />;
 
     case "expense_report_widget":
@@ -36,29 +55,28 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       return <CardSafety {...widget} />;
 
     case "card_freeze_all":
-      return <StopCard {...widget} />;
+      component = <CardFreezeAll {...widget} />;
+      break;
 
     case "atm_smart_withdrawal":
-      return (
-        <div className="flex flex-col gap-3">
-          <AtmNum {...widget} />
-          <AtmPlace {...widget} />
-          <AtmDes {...widget} />
-        </div>
-      );
+      component = <AtmSmartWithdrawal {...widget} />;
+      break;
 
     case "id_reissue_status_widget":
-      return (
+      component = (
         <div className="flex flex-col gap-3">
           <Done {...widget} />
           <ReceiveInfo {...widget} />
         </div>
       );
+      break;
 
     default:
       console.warn("지원하지 않는 위젯 타입:", widget.type);
       return null;
   }
+
+  return component;
 }
 
 export default WidgetRenderer;

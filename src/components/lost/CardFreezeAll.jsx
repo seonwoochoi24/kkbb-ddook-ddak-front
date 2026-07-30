@@ -4,7 +4,12 @@ import Title from "../Title.jsx";
 import alert from "../../assets/icons/alert.svg";
 import goodkkaebi from "../../assets/logo/goodkkaebi.svg";
 
-function StopCard() {
+function CardFreezeAll({
+  title = "보유 카드 일괄 정지",
+  cards = [],
+  warningText = "분실된 카드의 모든 결제가 차단됩니다.",
+  confirmMessage = "모든 카드가 안전하게 정지되었어요!\n분실된 카드의 결제가 차단되었습니다.",
+}) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +30,7 @@ function StopCard() {
     <>
       <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
         <div className="flex items-center justify-between">
-          <Title icon={alert} title="보유 카드 일괄 정지" />
+          <Title icon={alert} title={title} />
           <button
             type="button"
             onClick={handleToggle}
@@ -37,13 +42,15 @@ function StopCard() {
             />
           </button>
         </div>
-        <div className="flex items-center gap-2 rounded-button bg-background p-4">
-          <span className="text-body-1 text-darkgray">[체크] </span>
-          <span className="text-body-2 text-gray">KB국민 노리2 체크카드</span>
+        <div className="flex flex-col gap-2">
+          {cards.map((card, index) => (
+            <div key={index} className="flex items-center gap-2 rounded-button bg-background p-4">
+              <span className="text-body-1 text-darkgray">[체크] </span>
+              <span className="text-body-2 text-gray">{card.cardName}</span>
+            </div>
+          ))}
         </div>
-        <span className="text-caption-1 text-gray">
-          분실된 카드의 모든 결제가 차단됩니다.
-        </span>
+        <span className="text-caption-1 text-gray">{warningText}</span>
       </div>
 
       {isModalOpen && (
@@ -76,4 +83,4 @@ function StopCard() {
   );
 }
 
-export default StopCard;
+export default CardFreezeAll;

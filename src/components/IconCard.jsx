@@ -15,7 +15,7 @@ const ID_CARD_CONFIG = {
 function IconCard({
   type = "1",
   planName,
-  coverages = [],
+  summary = "",
   finalPrice,
   selected = false,
   onClick,
@@ -37,15 +37,8 @@ function IconCard({
             {planName}
           </span>
 
-          <div className="my-2 flex flex-col gap-1">
-            {coverages.map((coverage) => (
-              <span
-                key={coverage}
-                className="break-keep text-center text-caption-2 text-darkgray"
-              >
-                {coverage}
-              </span>
-            ))}
+          <div className="my-2">
+            <span className="break-keep text-center text-caption-2 text-darkgray">{summary}</span>
           </div>
 
           <span className="text-body-1 text-darkgray">

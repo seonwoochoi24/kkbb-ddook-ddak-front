@@ -106,7 +106,7 @@ function TravelCardChargeWidget({
               <p className="text-header text-gray py-1">{currency}</p>
             </div>
             <p className="mt-2 text-caption-1 text-gray">
-              환율 1 {currency} = {exchangeRate.toFixed(2)}원 ({rateDescription})
+              환율 1 {currency} = {exchangeRate}원 ({rateDescription})
             </p>
           </div>
 
