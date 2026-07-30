@@ -2,18 +2,31 @@
 import { useState } from "react";
 import Chat from "../components/Chat.jsx";
 import WidgetRenderer from "../components/WidgetRenderer.jsx";
+import kkaebiFace from "../assets/logo/kkaebi-face.svg";
 
 function ChatPage() {
   const [widgets, setWidgets] = useState([]);
+  const [greeting, setGreeting] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  const handleWidgetsReceived = (receivedWidgets) => {
+  
+
+  // updated signature: (widgets, greeting)
+  const handleWidgetsReceived = (receivedWidgets, receivedGreeting) => {
     setWidgets(receivedWidgets);
+    setGreeting(receivedGreeting ?? null);
   };
 
   return (
     <main className="flex min-h-dvh flex-col gap-3 px-[10px] pb-[110px]">
       <section className="flex flex-col gap-3">
+        {greeting && (
+          <div className="mb-2 flex items-center gap-3">
+            <img src={kkaebiFace} alt="kkaebi face" className="h-12" />
+            <div className="rounded-card text-caption-2 text-darkgray">{greeting}</div>
+          </div>
+        )}
+
         {widgets.map((widget, index) => (
           <WidgetRenderer
             key={`${widget.type}-${index}`}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Title from "../Title.jsx";
 import IconCard from "../IconCard.jsx";
 import Button from "../Button.jsx";
+import shield from "../../assets/icons/shield.svg"
 
 function TravelInsuranceWidget({
   title,
@@ -12,7 +13,7 @@ function TravelInsuranceWidget({
 
   return (
     <section className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
-      <Title title={title} />
+      <Title title={title} icon={shield} />
 
       <span className="text-caption-1 text-gray">
         {description}
@@ -27,7 +28,7 @@ function TravelInsuranceWidget({
               key={plan.planName}
               type={type}
               planName={plan.planName}
-              coverages={plan.coverages}
+              summary={plan.summary}
               finalPrice={plan.finalPrice}
               selected={selectedType === type}
               onClick={() => setSelectedType(type)}
