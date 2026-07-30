@@ -4,9 +4,10 @@ import Plan from "./travel/Plan.jsx";
 import OverseasQrPaymentWidget from "./travel/OverseasQrPaymentWidget.jsx";
 import TravelInsuranceWidget from "./travel/TravelInsuranceWidget.jsx";
 
-import More from "./widgets/More.jsx";
+import GroupAccount from "./widgets/GroupAccount.jsx";
+import ExpenseReport from "./widgets/ExpenseReport.jsx";
+import CardSafety from "./widgets/CardSafety.jsx";
 import StopCard from "./widgets/StopCard.jsx";
-import FreezeCard from "./widgets/FreezeCard.jsx";
 import Atm from "./widgets/Atm.jsx";
 import AtmNum from "./widgets/AtmNum.jsx";
 import AtmPlace from "./widgets/AtmPlace.jsx";
@@ -26,13 +27,13 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       return <TravelInsuranceWidget {...widget} />;
 
     case "group_account_status":
-      return <More {...widget} />;
+      return <GroupAccount {...widget} />;
 
     case "expense_report_widget":
-      return <StopCard {...widget} />;
+      return <ExpenseReport {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
 
     case "group_card_safety_widget":
-      return <FreezeCard {...widget} />;
+      return <CardSafety {...widget} />;
 
     case "card_freeze_all":
       return <StopCard {...widget} />;
