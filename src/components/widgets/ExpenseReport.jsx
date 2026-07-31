@@ -26,7 +26,7 @@ function ExpenseReport({
 
   return (
     <>
-      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
         <Title icon={dollar} title={title} />
 
         {biggestExpense && (

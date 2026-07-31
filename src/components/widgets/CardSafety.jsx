@@ -10,7 +10,7 @@ function CardSafety({ title, toggles = [] }) {
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+    <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <Title icon={shield} title={title} />
 
       {toggles.map((toggle, index) => {

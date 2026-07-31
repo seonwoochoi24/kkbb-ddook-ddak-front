@@ -9,6 +9,8 @@ function OverseasQrPaymentWidget({
   title,
   linkedCard,
   merchantNetwork,
+  cardLogoUrl,
+  merchantLogoUrl,
   benefits = [],
   agreements = [],
   onSheetOpenChanged,
@@ -16,6 +18,8 @@ function OverseasQrPaymentWidget({
   const [checkedAgreements, setCheckedAgreements] = useState([]);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [hasCardLogoError, setHasCardLogoError] = useState(false);
+  const [hasMerchantLogoError, setHasMerchantLogoError] = useState(false);
 
   const handleAgreementClick = (index) => {
     setCheckedAgreements((prev) =>
@@ -51,7 +55,7 @@ function OverseasQrPaymentWidget({
   );
 
   return (
-    <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5">
+    <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5 shadow-card">
       <Title icon={wallet} title={title} />
 
       
@@ -100,18 +104,40 @@ function OverseasQrPaymentWidget({
           </div>
 
           <div className="flex items-center justify-between gap-3 rounded-card px-4 py-4">
-            <div>
-              <div className="text-body-2 text-gray">연결 카드</div>
-              <div className="text-body-1 text-darkgray">{linkedCard}</div>
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full">
+              {cardLogoUrl && !hasCardLogoError ? (
+                <img
+                  src={cardLogoUrl}
+                  alt={`${linkedCard ?? "연결 카드"} 로고`}
+                  decoding="async"
+                  onError={() => setHasCardLogoError(true)}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-center text-body-1 text-darkgray">
+                  {linkedCard}
+                </span>
+              )}
             </div>
 
             <div className="flex h-12 w-12 items-center justify-center rounded-full">
               <Icon icon="solar:arrow-right-bold" className="h-5 w-5 text-yellow" />
             </div>
 
-            <div className="text-right">
-              <div className="text-body-2 text-gray">가맹점</div>
-              <div className="text-body-1 text-darkgray">{merchantNetwork}</div>
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full">
+              {merchantLogoUrl && !hasMerchantLogoError ? (
+                <img
+                  src={merchantLogoUrl}
+                  alt={`${merchantNetwork ?? "가맹점"} 로고`}
+                  decoding="async"
+                  onError={() => setHasMerchantLogoError(true)}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-center text-body-1 text-darkgray">
+                  {merchantNetwork}
+                </span>
+              )}
             </div>
           </div>
 

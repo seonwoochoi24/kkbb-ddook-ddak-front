@@ -72,10 +72,14 @@ function Chat({
 
       console.log("응답:", data);
 
-      onWidgetsReceived?.(data.widgets ?? [], data.greeting ?? null);
+      onWidgetsReceived?.(
+        data.widgets ?? [],
+        data.greeting ?? null,
+        data.additionalActionPrompt ?? null,
+      );
     } catch (error) {
       console.error("전송 에러:", error);
-      onWidgetsReceived?.([], null);
+      onWidgetsReceived?.([], null, null);
     } finally {
       setIsLoading(false);
       onAutoSubmitComplete?.();

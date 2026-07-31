@@ -4,7 +4,7 @@ import Chat from "../components/Chat.jsx";
 import WidgetRenderer from "../components/WidgetRenderer.jsx";
 import ChatOrigin from "../components/common/ChatOrigin.jsx";
 import More from "../components/lost/More.jsx";
-import kkaebiFace from "../assets/logo/kkaebi-face.svg";
+import kkaebiFace from "../assets/logo/kkaebi-face.png";
 
 const TYPING_INTERVAL_MS = 35;
 const WIDGET_REVEAL_INTERVAL_MS = 250;
@@ -32,6 +32,7 @@ function ChatPage() {
   const [isIdReissueVisible, setIsIdReissueVisible] = useState(false);
   const [visibleIdReissueWidgetCount, setVisibleIdReissueWidgetCount] = useState(0);
   const [idReissueSelectedTypes, setIdReissueSelectedTypes] = useState([]);
+  const [additionalActionPrompt, setAdditionalActionPrompt] = useState(null);
 
   const shouldShowOrigin = widgets.length === 0 && !greeting;
   const isGreetingTyping = Boolean(greeting && displayedGreeting !== greeting);
@@ -40,7 +41,11 @@ function ChatPage() {
     displayedInsuranceGreeting !== insurancePlanResult.greeting,
   );
 
-  const handleWidgetsReceived = (receivedWidgets, receivedGreeting) => {
+  const handleWidgetsReceived = (
+    receivedWidgets,
+    receivedGreeting,
+    receivedAdditionalActionPrompt,
+  ) => {
     const widgetGreeting = receivedWidgets.find((widget) => widget.greeting)?.greeting;
     const hasNoWidgets = receivedWidgets.length === 0;
 
@@ -56,6 +61,7 @@ function ChatPage() {
     setIsIdReissueVisible(false);
     setVisibleIdReissueWidgetCount(0);
     setIdReissueSelectedTypes([]);
+    setAdditionalActionPrompt(receivedAdditionalActionPrompt);
 
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -238,6 +244,7 @@ function ChatPage() {
       setDisplayedIdReissueGreeting("");
       setIsIdReissueVisible(false);
       setIdReissueSelectedTypes([]);
+      setAdditionalActionPrompt(null);
       setChatMessage("");
       setAutoSubmitMessage(null);
 
@@ -288,11 +295,16 @@ function ChatPage() {
           </div>
         ))}
 
-        {visibleWidgetCount === widgets.length && widgets.length > 0 && (
-          <div className="widget-reveal">
-            <More />
-          </div>
-        )}
+        {visibleWidgetCount === widgets.length &&
+          widgets.length > 0 &&
+          additionalActionPrompt && (
+            <div className="widget-reveal">
+              <More
+                title={additionalActionPrompt.title}
+                subtitle={additionalActionPrompt.subtitle}
+              />
+            </div>
+          )}
       </section>
 
       {insurancePlanResult && (

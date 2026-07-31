@@ -4,7 +4,7 @@ import vector from "../../assets/icons/vector.svg";
 
 function Atm() {
   return (
-    <section className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+    <section className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <div className="flex items-center gap-2">
         <Title icon={wallet} title="당장 현금이 필요하신가요?" />
       </div>
