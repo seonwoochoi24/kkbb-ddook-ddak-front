@@ -16,7 +16,7 @@ function IdCard({ onSubmit, initialSelectedTypes = [] }) {
   };
 
   return (
-    <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
+    <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <Title icon={wallet} title="신분증도 잃어버리셨나요?" />
       <span className="text-caption-1 text-gray">
         주민등록증, 운전면허증 분실 신고 및 재발급 신청을 한 번에 하세요.

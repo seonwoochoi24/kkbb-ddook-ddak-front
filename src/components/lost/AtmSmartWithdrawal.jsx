@@ -35,7 +35,7 @@ function AtmSmartWithdrawal({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
+      <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5 shadow-card">
         <Title icon={wallet} title={title} />
         <span className="text-caption-1 text-gray">인증번호를 ATM에 입력하세요.</span>
 
@@ -70,7 +70,7 @@ function AtmSmartWithdrawal({
         <span className="text-body-2 text-gray">보안을 위해 인증번호는 자동 폐기합니다</span>
       </div>
 
-      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
         <div className="flex items-center gap-2">
           <Title icon={wallet} title="가장 가까운 KB ATM" />
         </div>
@@ -86,7 +86,7 @@ function AtmSmartWithdrawal({
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
         <div className="flex items-center gap-2">
           <Title icon={wallet} title="ATM 사용 방법" />
         </div>

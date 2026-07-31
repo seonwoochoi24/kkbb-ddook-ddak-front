@@ -17,31 +17,33 @@ function TravelInsuranceWidget({
     selectedType === null ? null : plans[Number(selectedType) - 1];
 
   return (
-    <section className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
+    <section className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <Title title={title} icon={shield} />
 
       <span className="text-caption-1 text-gray">
         {description}
       </span>
 
-      <div className="flex w-full items-stretch justify-center gap-10 rounded-button">
-        {plans.map((plan, index) => {
-          const type = String(index + 1);
+      {!completedPlanName && (
+        <div className="flex w-full items-stretch justify-center gap-10 rounded-button">
+          {plans.map((plan, index) => {
+            const type = String(index + 1);
 
-          return (
-            <IconCard
-              key={plan.planName}
-              type={type}
-              planName={plan.planName}
-              recommended={plan.recommended}
-              summary={plan.summary}
-              finalPrice={plan.finalPrice}
-              selected={selectedType === type}
-              onClick={() => setSelectedType(type)}
-            />
-          );
-        })}
-      </div>
+            return (
+              <IconCard
+                key={plan.planName}
+                type={type}
+                planName={plan.planName}
+                recommended={plan.recommended}
+                summary={plan.summary}
+                finalPrice={plan.finalPrice}
+                selected={selectedType === type}
+                onClick={() => setSelectedType(type)}
+              />
+            );
+          })}
+        </div>
+      )}
 
       <Button
         text={completedPlanName ? `${completedPlanName} 가입 완료` : "3초만에 뚝딱 가입하기"}

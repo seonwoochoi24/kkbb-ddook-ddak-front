@@ -19,7 +19,7 @@ function AtmNum() {
   };
 
   return (
-    <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
+    <div className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <Title icon={wallet} title="카드 없는 스마트 출금" />
       <span className="text-caption-1 text-gray">
         인증번호를 ATM에 입력하세요.

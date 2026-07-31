@@ -2,7 +2,7 @@ import { useState } from "react";
 import Title from "../Title.jsx";
 
 import alert from "../../assets/icons/alert.svg";
-import goodkkaebi from "../../assets/logo/goodkkaebi.svg";
+import goodkkaebi from "../../assets/logo/goodkkaebi.png";
 
 function CardFreezeAll({
   title = "보유 카드 일괄 정지",
@@ -28,7 +28,7 @@ function CardFreezeAll({
 
   return (
     <>
-      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+      <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
         <div className="flex items-center justify-between">
           <Title icon={alert} title={title} />
           <button

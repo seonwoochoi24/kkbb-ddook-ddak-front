@@ -5,7 +5,7 @@ function GroupAccount({ title, syncDescription, balance, paidCount, totalCount, 
   const percent = totalCount ? Math.round((paidCount / totalCount) * 100) : 0;
 
   return (
-    <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+    <div className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <div className="flex flex-col gap-1">
         <Title icon={wallet} title={title} />
         <span className="text-caption-1 text-gray">{syncDescription}</span>

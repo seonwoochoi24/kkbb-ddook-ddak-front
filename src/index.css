@@ -15,8 +15,7 @@
   --radius-card: 16px;
 
   /* 공통 그림자 */
-  --shadow-card: 0px 4px #000000 0.1;
-
+  --shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
 
   /* Header: 18px / 140% / SemiBold */
   --text-header: 18px;
@@ -53,7 +52,15 @@
 
 @layer base {
   html {
-    font-family: Pretendard;
+    font-family:
+      "Pretendard Variable",
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Apple SD Gothic Neo",
+      "Noto Sans KR",
+      "Malgun Gothic",
+      sans-serif;
   }
   button {
     cursor: pointer;

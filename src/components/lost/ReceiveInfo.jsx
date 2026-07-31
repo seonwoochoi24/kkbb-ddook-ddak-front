@@ -3,7 +3,7 @@ import wallet from "../../assets/icons/wallet.svg";
 
 function ReceiveInfo() {
   return (
-    <section className="flex flex-col gap-3 rounded-card bg-white px-4 py-5">
+    <section className="flex flex-col gap-3 rounded-card bg-white px-4 py-5 shadow-card">
       <div className="flex items-center gap-2">
         <Title icon={wallet} title="수령 방법 및 예상 기간 안내" />
       </div>

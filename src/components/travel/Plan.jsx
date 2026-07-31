@@ -27,7 +27,7 @@ function Plan({
 
   return (
     <div className="flex flex-col gap-3">
-      <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5">
+      <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5 shadow-card">
         <Title icon={wallet} title={title} />
 
         <div className="flex flex-col gap-2">

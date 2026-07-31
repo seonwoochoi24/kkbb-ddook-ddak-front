@@ -1,4 +1,4 @@
-import kkaebi from "../../assets/logo/kkaebi.svg";
+import kkaebi from "../../assets/logo/kkaebi.png";
 import noreply from "../../assets/logo/noreply.png";
 
 function ChatOrigin({ isNoReply = false, onSelectPrompt }) {
