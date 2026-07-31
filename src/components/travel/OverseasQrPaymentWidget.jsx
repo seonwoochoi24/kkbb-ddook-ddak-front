@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import Title from "../Title.jsx";
+import Button from "../Button.jsx";
 import OverlayPortal from "../common/OverlayPortal.jsx";
 import wallet from "../../assets/icons/wallet.svg";
 import check from "../../assets/icons/check.svg";
@@ -72,18 +73,12 @@ function OverseasQrPaymentWidget({
       </div>
 
       <div className="flex justify-center">
-        <button
-          type="button"
-          onClick={isConnected ? undefined : toggleSheet}
+        <Button
+          text={isConnected ? "상하이 현지 결제 준비 완료!" : "알리페이 / 위챗페이 연동 뚝딱 켜기"}
+          onClick={toggleSheet}
           disabled={isConnected}
-          aria-disabled={isConnected}
-          className={`rounded-button px-4 py-4 w-full text-body-1 font-semibold ${
-            isConnected ? "bg-yellow text-black cursor-default" : "bg-darkgray text-white"
-          }`}
-        >
-          {isConnected ? "상하이 현지 결제 준비 완료!" : "알리페이 / 위챗페이 연동 뚝딱 켜기"}
-        </button>
-
+          completed={isConnected}
+        />
       </div>
 
       <OverlayPortal>
@@ -179,18 +174,11 @@ function OverseasQrPaymentWidget({
           </div>
 
           <div className="mt-4 flex justify-center">
-            <button
-              type="button"
+            <Button
+              text="Face ID로 1초 만에 연동하기"
               disabled={!allRequiredAgreed}
               onClick={handleConnect}
-              className={`rounded-button w-full px-4 py-3 text-title font-semibold transition ${
-                allRequiredAgreed
-                  ? "bg-yellow text-black"
-                  : "bg-darkgray text-white"
-              }`}
-            >
-              {allRequiredAgreed ? "Face ID로 1초 만에 연동하기" : "Face ID로 1초 만에 연동하기"}
-            </button>
+            />
           </div>
         </div>
       </div>
