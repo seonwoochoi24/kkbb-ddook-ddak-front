@@ -68,3 +68,40 @@
   margin: 0 auto;
   background-color: var(--color-background);
 }
+
+.typing-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background-color: currentColor;
+  animation: typing-cursor-blink 0.7s step-end infinite;
+}
+
+.widget-reveal {
+  animation: widget-reveal 0.3s ease-out;
+}
+
+@keyframes typing-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes widget-reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-cursor,
+  .widget-reveal {
+    animation: none;
+  }
+}

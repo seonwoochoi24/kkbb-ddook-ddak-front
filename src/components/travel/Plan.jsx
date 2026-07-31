@@ -5,6 +5,10 @@ import check from "../../assets/icons/check.svg";
 
 function Plan({
   title = "상하이 안심 플랜 (고급형)",
+  planName,
+  finalPrice = 3500,
+  coverages,
+  onConnect,
   items = [
     { label: "현지 질병/상해 의료비", value: "+ 최대 3천만원" },
     { label: "휴대폰 도난 및 파손", value: "+ 최대 50만원" },
@@ -12,30 +16,43 @@ function Plan({
   ],
 }) {
   const [agreed, setAgreed] = useState(false);
+  const displayedItems = coverages?.map((coverage) => {
+    const [label, value] = coverage.split(" 최대 ");
+
+    return {
+      label,
+      value: value ? `+ 최대 ${value}` : "",
+    };
+  }) ?? items;
 
   return (
-    <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5">
-      <Title icon={wallet} title={title} />
+    <div className="flex flex-col gap-3">
+      <section className="flex flex-col gap-4 rounded-card bg-white px-4 py-5">
+        <Title icon={wallet} title={title} />
 
-      <div className="flex flex-col gap-2">
-        {items.map((item, index) => (
-          <div key={index} className="flex items-center justify-between gap-2">
-            <span className="text-body-2 text-gray">{item.label}</span>
-            <span className="text-body-1 text-yellow">{item.value}</span>
-          </div>
-        ))}
-      </div>
+        <div className="flex flex-col gap-2">
+          {displayedItems.map((item, index) => (
+            <div key={index} className="flex items-center justify-between gap-2">
+              <span className="text-body-2 text-gray">{item.label}</span>
+              <span className="text-body-1 text-yellow">{item.value}</span>
+            </div>
+          ))}
+        </div>
 
-      <div className="flex flex-col gap-3 border-t border-gray/20 pt-3">
+      </section>
+
+      <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="text-body-1 text-gray">최종 결제 금액</span>
-          <span className="text-header text-darkgray">3,500원</span>
+          <span className="text-header text-darkgray">
+            {finalPrice?.toLocaleString("ko-KR")}원
+          </span>
         </div>
 
         <button
           type="button"
           onClick={() => setAgreed((prev) => !prev)}
-          className="flex items-center gap-2 rounded-button bg-white text-left"
+          className="flex items-center gap-2 rounded-button text-left"
         >
           <span className="flex h-4 w-4 shrink-0 items-center justify-center">
             <img
@@ -53,6 +70,7 @@ function Plan({
         <button
           type="button"
           disabled={!agreed}
+          onClick={() => onConnect?.(planName)}
           className={`rounded-button px-4 py-3 text-title font-semibold transition ${
             agreed
               ? "bg-yellow text-darkgray"
@@ -62,7 +80,7 @@ function Plan({
           Face ID로 1초 만에 연동하기
         </button>
       </div>
-    </section>
+    </div>
   );
 }
 

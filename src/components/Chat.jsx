@@ -1,10 +1,28 @@
 // src/components/Chat.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
-function Chat({ type = "chat", onWidgetsReceived }) {
-  const [message, setMessage] = useState("");
+function Chat({
+  type = "chat",
+  onWidgetsReceived,
+  message: controlledMessage,
+  onMessageChange,
+  autoSubmitMessage,
+  onAutoSubmitComplete,
+}) {
+  const [internalMessage, setInternalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const message = controlledMessage !== undefined ? controlledMessage : internalMessage;
+
+  const updateMessage = (nextValue) => {
+    if (onMessageChange) {
+      onMessageChange(nextValue);
+      return;
+    }
+
+    setInternalMessage(nextValue);
+  };
 
   const hasMessage = message.trim().length > 0;
 
@@ -15,8 +33,10 @@ function Chat({ type = "chat", onWidgetsReceived }) {
 
   const API_URL = import.meta.env.VITE_CHAT_API_URL ?? "";
 
-  const handleButtonClick = async () => {
-    if (!hasMessage) {
+  const handleButtonClick = async (nextMessage = message) => {
+    const trimmedMessage = (nextMessage ?? "").trim();
+
+    if (!trimmedMessage) {
       console.log("음성 입력 시작");
       return;
     }
@@ -29,9 +49,7 @@ function Chat({ type = "chat", onWidgetsReceived }) {
       return;
     }
 
-    const submittedMessage = message.trim();
-
-    setMessage("");
+    updateMessage("");
     setIsLoading(true);
 
     try {
@@ -41,7 +59,7 @@ function Chat({ type = "chat", onWidgetsReceived }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: submittedMessage,
+          message: trimmedMessage,
         }),
       });
 
@@ -54,17 +72,22 @@ function Chat({ type = "chat", onWidgetsReceived }) {
 
       console.log("응답:", data);
 
-      // 응답으로 받은 widgets와 greeting을 MainPage에 전달
       onWidgetsReceived?.(data.widgets ?? [], data.greeting ?? null);
     } catch (error) {
       console.error("전송 에러:", error);
-
-      // 에러가 발생하면 기존 위젯을 없애고 싶을 때
       onWidgetsReceived?.([], null);
     } finally {
       setIsLoading(false);
+      onAutoSubmitComplete?.();
     }
   };
+
+  useEffect(() => {
+    if (!autoSubmitMessage) return;
+
+    updateMessage(autoSubmitMessage);
+    handleButtonClick(autoSubmitMessage);
+  }, [autoSubmitMessage]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -78,7 +101,7 @@ function Chat({ type = "chat", onWidgetsReceived }) {
       <textarea
         value={message}
         onChange={(event) => {
-          setMessage(event.target.value);
+          updateMessage(event.target.value);
 
           event.target.style.height = "auto";
           event.target.style.height = `${event.target.scrollHeight}px`;
@@ -106,7 +129,7 @@ function Chat({ type = "chat", onWidgetsReceived }) {
 
       <button
         type="button"
-        onClick={handleButtonClick}
+        onClick={() => handleButtonClick()}
         disabled={isLoading}
         aria-label={hasMessage ? "메시지 전송" : "음성 입력"}
         className="flex h-6 w-6 shrink-0 items-center justify-center disabled:opacity-40"

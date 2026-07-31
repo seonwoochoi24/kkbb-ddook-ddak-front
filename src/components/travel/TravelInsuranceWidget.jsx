@@ -8,8 +8,13 @@ function TravelInsuranceWidget({
   title,
   description,
   plans = [],
+  greeting,
+  onSubmit,
+  completedPlanName,
 }) {
   const [selectedType, setSelectedType] = useState(null);
+  const selectedPlan =
+    selectedType === null ? null : plans[Number(selectedType) - 1];
 
   return (
     <section className="flex flex-col items-start justify-between gap-3 rounded-card bg-white px-4 py-5">
@@ -28,6 +33,7 @@ function TravelInsuranceWidget({
               key={plan.planName}
               type={type}
               planName={plan.planName}
+              recommended={plan.recommended}
               summary={plan.summary}
               finalPrice={plan.finalPrice}
               selected={selectedType === type}
@@ -38,8 +44,9 @@ function TravelInsuranceWidget({
       </div>
 
       <Button
-        text="3초만에 뚝딱 가입하기"
-        disabled={selectedType === null}
+        text={completedPlanName ? `${completedPlanName} 가입 완료` : "3초만에 뚝딱 가입하기"}
+        disabled={selectedType === null || Boolean(completedPlanName)}
+        onClick={() => onSubmit?.({ ...selectedPlan, greeting })}
       />
     </section>
   );

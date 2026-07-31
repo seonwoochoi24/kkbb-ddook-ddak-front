@@ -1,8 +1,14 @@
 import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Title from "../Title.jsx";
+import OverlayPortal from "../common/OverlayPortal.jsx";
 import dollar from "../../assets/icons/dollar.svg";
 import kkaebiFace from "../../assets/logo/kkaebi-face.svg";
+
+const toNumber = (value) => {
+  const parsedValue = Number(String(value ?? 0).replace(/[^0-9.-]/g, ""));
+  return Number.isFinite(parsedValue) ? parsedValue : 0;
+};
 
 function TravelCardChargeWidget({
   title,
@@ -13,11 +19,11 @@ function TravelCardChargeWidget({
   rateDescription,
   quickAmounts = [100, 500, 1000],
   suggestedAmount = 2000,
-  estimatedKrw = 378400,
   onSheetOpenChanged,
 }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [amount, setAmount] = useState(suggestedAmount);
+  const [amount, setAmount] = useState(() => toNumber(suggestedAmount));
+  const [balance, setBalance] = useState(() => toNumber(cardBalance));
 
   const sheetRef = useRef(null);
 
@@ -30,7 +36,7 @@ function TravelCardChargeWidget({
   };
 
   const handleQuickAmount = (value) => {
-    setAmount((prev) => prev + value);
+    setAmount((prev) => prev + toNumber(value));
   };
 
   const handleDigit = (digit) => {
@@ -49,6 +55,10 @@ function TravelCardChargeWidget({
   };
 
   const handleCharge = () => {
+    if (amount > 0) {
+      setBalance((currentBalance) => currentBalance + amount);
+    }
+
     setIsSheetOpen(false);
     onSheetOpenChanged?.(false);
   };
@@ -62,15 +72,15 @@ function TravelCardChargeWidget({
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-row items-center justify-between rounded-card bg-background px-4 py-4">
-            <span className="text-body-2 text-darkgray">
-              내 트래블 카드 잔액 : {cardBalance} {currency}
+            <span className="text-body-2 text-darkgray whitespace-nowrap">
+              내 트래블 카드 잔액 : {balance.toLocaleString("ko-KR")} {currency}
             </span>
 
             <div className="flex justify-end">
               <button
                 type="button"
                 onClick={handleToggleSheet}
-                className="rounded-[8px] bg-yellow px-2 py-3 text-body-1 text-darkgray"
+                className="rounded-[8px] bg-yellow px-2 py-3 text-body-1 text-darkgray whitespace-nowrap"
               >
                 {chargeButtonLabel}
               </button>
@@ -83,7 +93,8 @@ function TravelCardChargeWidget({
         </div>
       </section>
 
-      <div className={`fixed inset-0 z-50 flex items-end justify-center ${isSheetOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+      <OverlayPortal>
+      <div className={`fixed inset-0 z-[100] flex items-end justify-center ${isSheetOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div
           className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${isSheetOpen ? "opacity-100" : "opacity-0"}`}
           onClick={handleToggleSheet}
@@ -165,6 +176,7 @@ function TravelCardChargeWidget({
           </button>
         </div>
       </div>
+      </OverlayPortal>
     </>
   );
 }

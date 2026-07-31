@@ -1,22 +1,29 @@
 // src/components/WidgetRenderer.jsx
 import TravelCardChargeWidget from "./travel/TravelCardChargeWidget.jsx";
-import Plan from "./travel/Plan.jsx";
 import OverseasQrPaymentWidget from "./travel/OverseasQrPaymentWidget.jsx";
 import TravelInsuranceWidget from "./travel/TravelInsuranceWidget.jsx";
+import Plan from "./travel/Plan.jsx";
 
 import GroupAccount from "./widgets/GroupAccount.jsx";
 import ExpenseReport from "./widgets/ExpenseReport.jsx";
 import CardSafety from "./widgets/CardSafety.jsx";
 
-import More from "./widgets/More.jsx";
 import CardFreezeAll from "./lost/CardFreezeAll.jsx";
-import FreezeCard from "./lost/FreezeCard.jsx";
+import IdCard from "./lost/IdCard.jsx";
 import AtmSmartWithdrawal from "./lost/AtmSmartWithdrawal.jsx";
 import Done from "./widgets/Done.jsx";
-import ReceiveInfo from "./widgets/ReceiveInfo.jsx";
+import ReceiveInfo from "./lost/ReceiveInfo.jsx";
 
-function WidgetRenderer({ widget, onSheetOpenChanged }) {
-  let component = null;
+function WidgetRenderer({
+  widget,
+  onSheetOpenChanged,
+  onIdReissueSubmit,
+  onTravelInsuranceSubmit,
+  onTravelInsuranceBack,
+  completedInsurancePlanName,
+  idReissueSelectedTypes,
+}) {
+  let component;
 
   switch (widget.type) {
     case "travel_card_charge_widget":
@@ -28,7 +35,17 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       break;
 
     case "travel_insurance_widget":
-      component = <TravelInsuranceWidget {...widget} />;
+      component = (
+        <TravelInsuranceWidget
+          {...widget}
+          onSubmit={onTravelInsuranceSubmit}
+          completedPlanName={completedInsurancePlanName}
+        />
+      );
+      break;
+
+    case "travel_insurance_plan_widget":
+      component = <Plan {...widget} onConnect={onTravelInsuranceBack} />;
       break;
 
     case "group_account_status":
@@ -39,16 +56,6 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
  
     case "group_card_safety_widget":
       return <CardSafety {...widget} />;
-      component = <More {...widget} />;
-      break;
-
-    case "expense_report_widget":
-      component = <ExpenseReport {...widget} onSheetOpenChanged={onSheetOpenChanged} />;
-      break;
-
-    case "group_card_safety_widget":
-      component = <CardSafety {...widget} />;
-      break;
 
     case "card_freeze_all":
       component = <CardFreezeAll {...widget} />;
@@ -59,12 +66,15 @@ function WidgetRenderer({ widget, onSheetOpenChanged }) {
       break;
 
     case "id_reissue_status_widget":
-      component = (
-        <div className="flex flex-col gap-3">
-          <Done {...widget} />
-          <ReceiveInfo {...widget} />
-        </div>
-      );
+      component = <IdCard {...widget} onSubmit={onIdReissueSubmit} initialSelectedTypes={idReissueSelectedTypes} />;
+      break;
+
+    case "id_reissue_done_widget":
+      component = <Done {...widget} />;
+      break;
+
+    case "id_reissue_receive_info_widget":
+      component = <ReceiveInfo {...widget} />;
       break;
 
     default:
