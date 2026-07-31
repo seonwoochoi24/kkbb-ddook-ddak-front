@@ -3,9 +3,18 @@ import star from "../../assets/logo/star.svg";
 import { Icon } from "@iconify/react";
 
 function Header() {
+  const handleBackClick = () => {
+    window.dispatchEvent(new Event("chat:return-to-origin"));
+  };
+
   return (
     <header className="sticky top-0 z-10 flex justify-between h-14 items-center bg-white px-5">
-       <button className="mr-2">
+       <button
+         type="button"
+         onClick={handleBackClick}
+         aria-label="이전 화면"
+         className="mr-2"
+       >
         <Icon icon="heroicons:arrow-left-16-solid" className="h-6 w-6" />
       </button>
       <div className="flex items-start">

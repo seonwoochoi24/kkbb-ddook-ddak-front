@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import Title from "../Title.jsx";
+import OverlayPortal from "../common/OverlayPortal.jsx";
 import wallet from "../../assets/icons/wallet.svg";
 import check from "../../assets/icons/check.svg";
 
@@ -81,7 +82,8 @@ function OverseasQrPaymentWidget({
 
       </div>
 
-      <div className={`fixed inset-0 z-50 flex items-end justify-center ${isSheetOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+      <OverlayPortal>
+      <div className={`fixed inset-0 z-[100] flex items-end justify-center ${isSheetOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div
           className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${isSheetOpen ? "opacity-100" : "opacity-0"}`}
           onClick={toggleSheet}
@@ -166,6 +168,7 @@ function OverseasQrPaymentWidget({
           </div>
         </div>
       </div>
+      </OverlayPortal>
     </section>
   );
 }

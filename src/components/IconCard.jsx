@@ -15,6 +15,7 @@ const ID_CARD_CONFIG = {
 function IconCard({
   type = "1",
   planName,
+  recommended = false,
   summary = "",
   finalPrice,
   selected = false,
@@ -34,7 +35,7 @@ function IconCard({
       {isInsuranceCard ? (
         <>
           <span className="text-caption-2 text-gray">
-            {planName}
+            {planName}{recommended && " (추천)"}
           </span>
 
           <div className="my-2">
