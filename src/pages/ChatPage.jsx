@@ -13,6 +13,8 @@ const ID_REISSUE_GREETING =
   "걱정 마세요! 깨비가 행정안전부와 경찰청에 뚝딱!\n신고하고 재발급까지 신청해 드릴게요.";
 const TRAVEL_INSURANCE_GREETING =
   "바쁘고 복잡한 여행 준비! 깨비가 꼭 필요한 보장만 뚝딱 담았어요.";
+const ATM_WITHDRAWAL_GREETING =
+  "인증번호가 뚝딱 생성되었어요!\n30분 안에 가까운 KB ATM에서 현금을 찾아주세요.";
 
 function ChatPage() {
   const [widgets, setWidgets] = useState([]);
@@ -33,6 +35,9 @@ function ChatPage() {
   const [visibleIdReissueWidgetCount, setVisibleIdReissueWidgetCount] = useState(0);
   const [idReissueSelectedTypes, setIdReissueSelectedTypes] = useState([]);
   const [additionalActionPrompt, setAdditionalActionPrompt] = useState(null);
+  const [atmWithdrawalResult, setAtmWithdrawalResult] = useState(null);
+  const [displayedAtmWithdrawalGreeting, setDisplayedAtmWithdrawalGreeting] = useState("");
+  const [isAtmWithdrawalVisible, setIsAtmWithdrawalVisible] = useState(false);
 
   const shouldShowOrigin = widgets.length === 0 && !greeting;
   const isGreetingTyping = Boolean(greeting && displayedGreeting !== greeting);
@@ -62,6 +67,9 @@ function ChatPage() {
     setVisibleIdReissueWidgetCount(0);
     setIdReissueSelectedTypes([]);
     setAdditionalActionPrompt(receivedAdditionalActionPrompt);
+    setAtmWithdrawalResult(null);
+    setDisplayedAtmWithdrawalGreeting("");
+    setIsAtmWithdrawalVisible(false);
 
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -113,6 +121,20 @@ function ChatPage() {
   const handleTravelInsuranceBack = (planName) => {
     setCompletedInsurancePlanName(planName);
     setInsurancePlanResult(null);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  };
+
+  const handleAtmWithdrawalCreate = (widget) => {
+    setDisplayedAtmWithdrawalGreeting("");
+    setIsAtmWithdrawalVisible(false);
+    setAtmWithdrawalResult({
+      ...widget,
+      type: "atm_smart_withdrawal_result",
+      greeting: ATM_WITHDRAWAL_GREETING,
+    });
 
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -211,7 +233,42 @@ function ChatPage() {
   }, [idReissueResult]);
 
   useEffect(() => {
+    if (!atmWithdrawalResult) return;
+
+    const timers = [];
+    const greetingCharacters = Array.from(atmWithdrawalResult.greeting);
+
+    greetingCharacters.forEach((_, index) => {
+      timers.push(
+        window.setTimeout(() => {
+          setDisplayedAtmWithdrawalGreeting(
+            greetingCharacters.slice(0, index + 1).join(""),
+          );
+        }, (index + 1) * TYPING_INTERVAL_MS),
+      );
+    });
+
+    timers.push(
+      window.setTimeout(() => {
+        setIsAtmWithdrawalVisible(true);
+      }, greetingCharacters.length * TYPING_INTERVAL_MS + WIDGET_REVEAL_DELAY_MS),
+    );
+
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [atmWithdrawalResult]);
+
+  useEffect(() => {
     const handleReturnToOrigin = () => {
+      if (atmWithdrawalResult) {
+        setAtmWithdrawalResult(null);
+        setDisplayedAtmWithdrawalGreeting("");
+        setIsAtmWithdrawalVisible(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
       if (idReissueResult) {
         setIdReissueResult(null);
         setDisplayedIdReissueGreeting("");
@@ -245,6 +302,9 @@ function ChatPage() {
       setIsIdReissueVisible(false);
       setIdReissueSelectedTypes([]);
       setAdditionalActionPrompt(null);
+      setAtmWithdrawalResult(null);
+      setDisplayedAtmWithdrawalGreeting("");
+      setIsAtmWithdrawalVisible(false);
       setChatMessage("");
       setAutoSubmitMessage(null);
 
@@ -256,7 +316,7 @@ function ChatPage() {
     return () => {
       window.removeEventListener("chat:return-to-origin", handleReturnToOrigin);
     };
-  }, [idReissueResult, insurancePlanResult, widgets.length]);
+  }, [atmWithdrawalResult, idReissueResult, insurancePlanResult, widgets.length]);
 
   return (
     <main className="flex min-h-dvh flex-col gap-3 px-[10px] pb-[110px]">
@@ -267,7 +327,7 @@ function ChatPage() {
         />
       )}
 
-      <section className={`${insurancePlanResult || idReissueResult ? "hidden" : "flex"} flex-col gap-3`}>
+      <section className={`${insurancePlanResult || idReissueResult || atmWithdrawalResult ? "hidden" : "flex"} flex-col gap-3`}>
         {greeting && (
           <div className="mb-2 flex items-center gap-3">
             <img src={kkaebiFace} alt="kkaebi face" className="h-12" />
@@ -289,6 +349,7 @@ function ChatPage() {
               onIdReissueSubmit={handleIdReissueSubmit}
               onTravelInsuranceSubmit={handleTravelInsuranceSubmit}
               onTravelInsuranceBack={handleTravelInsuranceBack}
+              onAtmWithdrawalCreate={handleAtmWithdrawalCreate}
               completedInsurancePlanName={completedInsurancePlanName}
               idReissueSelectedTypes={idReissueSelectedTypes}
             />
@@ -361,6 +422,29 @@ function ChatPage() {
               />
             </div>
           ))}
+        </section>
+      )}
+
+      {atmWithdrawalResult && (
+        <section className="flex flex-col gap-3">
+          <div className="mb-2 flex items-center gap-3">
+            <img src={kkaebiFace} alt="kkaebi face" className="h-12" />
+            <div
+              className="whitespace-pre-line rounded-card text-caption-2 text-darkgray"
+              aria-live="polite"
+            >
+              {displayedAtmWithdrawalGreeting}
+              {displayedAtmWithdrawalGreeting !== atmWithdrawalResult.greeting && (
+                <span className="typing-cursor" aria-hidden="true" />
+              )}
+            </div>
+          </div>
+
+          {isAtmWithdrawalVisible && (
+            <div className="widget-reveal">
+              <WidgetRenderer widget={atmWithdrawalResult} />
+            </div>
+          )}
         </section>
       )}
 
