@@ -2,6 +2,7 @@ import { useState } from "react";
 import Title from "../Title.jsx";
 import wallet from "../../assets/icons/wallet.svg";
 import copy from "../../assets/icons/copy.svg";
+import map from "../../assets/icons/map.png";
 
 function AtmSmartWithdrawal({
   title = "카드 없는 스마트 출금",
@@ -75,7 +76,7 @@ function AtmSmartWithdrawal({
           <Title icon={wallet} title="가장 가까운 KB ATM" />
         </div>
 
-        <div className="min-h-[180px] rounded-button bg-background" />
+        <img src={map} alt="map" className="rounded-button bg-background" />
 
         <div className="flex flex-col gap-2 rounded-card bg-gray-100 px-4 py-4">
           <div className="flex items-center justify-between">

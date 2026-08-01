@@ -1,4 +1,4 @@
-import kkaebi from "../../assets/logo/kkaebi.png";
+import kkaebi from "../../assets/logo/kkaebi.svg";
 import noreply from "../../assets/logo/noreply.png";
 
 function ChatOrigin({ isNoReply = false, onSelectPrompt }) {
@@ -35,6 +35,8 @@ function ChatOrigin({ isNoReply = false, onSelectPrompt }) {
               alt="Kkaebi"
               className="absolute -top-[130px] right-[0px] h-[115px] w-auto object-contain"
               style={{ filter: "drop-shadow(0 0 18px rgba(255, 215, 0, 0.75))" }}
+                fetchPriority="high"
+
             />
             <span className="mt-2 text-body-2 text-gray">
               상황을 말씀해주시면 딱 맞는 화면을 뚝딱해 드릴게요.

@@ -48,6 +48,7 @@ function TravelInsuranceWidget({
       <Button
         text={completedPlanName ? `${completedPlanName} 가입 완료` : "3초만에 뚝딱 가입하기"}
         disabled={selectedType === null || Boolean(completedPlanName)}
+        completed={Boolean(completedPlanName)}
         onClick={() => onSubmit?.({ ...selectedPlan, greeting })}
       />
     </section>

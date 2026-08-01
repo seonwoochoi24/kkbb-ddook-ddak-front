@@ -1,7 +1,9 @@
-function Button({ text = "Button", disabled = false, onClick }) {
-  const stateClass = disabled
-    ? "bg-darkgray text-white cursor-not-allowed"
-    : "bg-yellow text-darkgray cursor-pointer";
+function Button({ text = "Button", disabled = false, completed = false, onClick }) {
+  const stateClass = completed
+    ? "bg-yellow text-darkgray cursor-default"
+    : disabled
+      ? "bg-darkgray text-white cursor-not-allowed"
+      : "bg-yellow text-darkgray cursor-pointer";
 
   return (
     <button
