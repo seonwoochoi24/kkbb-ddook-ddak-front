@@ -4,7 +4,7 @@ import Chat from "../components/Chat.jsx";
 import WidgetRenderer from "../components/WidgetRenderer.jsx";
 import ChatOrigin from "../components/common/ChatOrigin.jsx";
 import More from "../components/lost/More.jsx";
-import kkaebiFace from "../assets/logo/kkaebi-face.png";
+import kkaebiFace from "../assets/logo/kkaebi-face.svg";
 
 const TYPING_INTERVAL_MS = 35;
 const WIDGET_REVEAL_INTERVAL_MS = 250;

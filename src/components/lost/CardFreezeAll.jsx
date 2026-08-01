@@ -2,7 +2,7 @@ import { useState } from "react";
 import Title from "../Title.jsx";
 
 import alert from "../../assets/icons/alert.svg";
-import goodkkaebi from "../../assets/logo/goodkkaebi.png";
+import goodkkaebi from "../../assets/logo/goodkkaebi.svg";
 
 function CardFreezeAll({
   title = "보유 카드 일괄 정지",
