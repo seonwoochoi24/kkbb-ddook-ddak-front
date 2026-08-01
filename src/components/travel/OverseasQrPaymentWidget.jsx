@@ -5,6 +5,7 @@ import Button from "../Button.jsx";
 import OverlayPortal from "../common/OverlayPortal.jsx";
 import wallet from "../../assets/icons/wallet.svg";
 import check from "../../assets/icons/check.svg";
+import qr from "../../assets/icons/qr.png";
 
 function OverseasQrPaymentWidget({
   title,
@@ -70,6 +71,17 @@ function OverseasQrPaymentWidget({
             {benefit}
           </span>
         ))}
+      </div>
+
+      <div className="overflow-hidden rounded-button bg-background">
+        <img
+          src={qr}
+          alt={isConnected ? "해외 QR 결제 코드" : ""}
+          aria-hidden={!isConnected}
+          className={`w-full transition duration-300 ${
+            isConnected ? "blur-none" : "blur-[6px]"
+          }`}
+        />
       </div>
 
       <div className="flex justify-center">
