@@ -10,6 +10,7 @@ import CardSafety from "./widgets/CardSafety.jsx";
 
 import CardFreezeAll from "./lost/CardFreezeAll.jsx";
 import IdCard from "./lost/IdCard.jsx";
+import Atm from "./lost/Atm.jsx";
 import AtmSmartWithdrawal from "./lost/AtmSmartWithdrawal.jsx";
 import Done from "./widgets/Done.jsx";
 import ReceiveInfo from "./lost/ReceiveInfo.jsx";
@@ -20,6 +21,7 @@ function WidgetRenderer({
   onIdReissueSubmit,
   onTravelInsuranceSubmit,
   onTravelInsuranceBack,
+  onAtmWithdrawalCreate,
   completedInsurancePlanName,
   idReissueSelectedTypes,
 }) {
@@ -62,6 +64,10 @@ function WidgetRenderer({
       break;
 
     case "atm_smart_withdrawal":
+      component = <Atm onCreate={() => onAtmWithdrawalCreate?.(widget)} />;
+      break;
+
+    case "atm_smart_withdrawal_result":
       component = <AtmSmartWithdrawal {...widget} />;
       break;
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Title from "../Title.jsx";
 import wallet from "../../assets/icons/wallet.svg";
 import copy from "../../assets/icons/copy.svg";
@@ -21,6 +21,30 @@ function AtmSmartWithdrawal({
   ],
 }) {
   const [copied, setCopied] = useState(false);
+  const [remainingSeconds, setRemainingSeconds] = useState(expiresInSeconds);
+  const expiresAtRef = useRef(null);
+
+  useEffect(() => {
+    expiresAtRef.current = Date.now() + expiresInSeconds * 1000;
+
+    const updateRemainingTime = () => {
+      const nextRemainingSeconds = Math.max(
+        0,
+        Math.ceil((expiresAtRef.current - Date.now()) / 1000),
+      );
+
+      setRemainingSeconds(nextRemainingSeconds);
+      return nextRemainingSeconds;
+    };
+
+    const intervalId = window.setInterval(() => {
+      if (updateRemainingTime() === 0) {
+        window.clearInterval(intervalId);
+      }
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [expiresInSeconds]);
 
   const handleCopy = async () => {
     try {
@@ -32,7 +56,7 @@ function AtmSmartWithdrawal({
     }
   };
 
-  const timerLabel = `${Math.floor(expiresInSeconds / 60)}:${String(expiresInSeconds % 60).padStart(2, "0")}`;
+  const timerLabel = `${Math.floor(remainingSeconds / 60)}:${String(remainingSeconds % 60).padStart(2, "0")}`;
 
   return (
     <div className="flex flex-col gap-3">
@@ -60,6 +84,7 @@ function AtmSmartWithdrawal({
               <button
                 type="button"
                 className="rounded-full bg-background px-3 py-2 text-caption-1 text-yellow"
+                aria-label={`인증번호 유효 시간 ${timerLabel}`}
               >
                 {timerLabel}
               </button>
