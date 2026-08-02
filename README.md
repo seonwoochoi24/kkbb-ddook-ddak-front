@@ -167,7 +167,7 @@ export OPENAI_API_KEY="your-openai-api-key"
 ### 2. Frontend 실행
 
 ```bash
-git clone https://github.com/sunwoo030616/kkbb-ddook-ddak-front.git
+git clone https://github.com/seonwoochoi24/kkbb-ddook-ddak-front.git
 cd kkbb-ddook-ddak-front
 npm install
 ```
@@ -229,7 +229,7 @@ curl -X POST http://localhost:8080/api/canvas \
 
 ## Repository
 
-- Frontend: [sunwoo030616/kkbb-ddook-ddak-front](https://github.com/sunwoo030616/kkbb-ddook-ddak-front)
+- Frontend: [seonwoochoi24/kkbb-ddook-ddak-front](https://github.com/seonwoochoi24/kkbb-ddook-ddak-front)
 - Backend: [sunwoo030616/KKBB-ddook-ddak-back](https://github.com/sunwoo030616/KKBB-ddook-ddak-back)
 - Design: [2026 KB AI Challenge Figma](https://www.figma.com/design/hW2FEx2HREkWZSIQR4qJqf/2026-KB-AI-Challenge)
 - Live Demo: [kkbb-ddookddak.netlify.app](https://kkbb-ddookddak.netlify.app)
