@@ -7,7 +7,7 @@ function MainLayout() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="px-4 py-6">
+      <main className=" py-6">
         <Outlet />
       </main>
     </div>
