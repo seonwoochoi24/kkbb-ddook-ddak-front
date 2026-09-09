@@ -16,8 +16,6 @@
 
 <br />
 
-**[깨비뚝딱 바로 체험하기 →](https://kkbb-ddookddak.netlify.app)**
-
 </div>
 
 ---
